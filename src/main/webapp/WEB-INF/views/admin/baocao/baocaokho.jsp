@@ -21,7 +21,16 @@
                         <input class="form-control dateDistribution" id="month" autocomplete="off" type="month" name="month">
                      </div>
                   </div>
+                   <div class=" col col-sm-2 d-flex add-on">
+                                                                      <input name="key" id="key" class="form-control " placeholder="Tìm kiếm" type="text">
+                                                                       <div class="input-group-btn">
+                                                                           <button class="btn btn-default" onclick="timkiem()" style="margin: 0px" id="btnSearch" type="button"><i class="fas fa-search "></i></button>
+                                                                       </div>
+
+
+                                                        </div>
                   <div class="col d-flex col-sm-auto justify-content-end" style="margin-left:100px">
+
                      <div class="col-auto">
                         <button id="collection-salary" type="button"
                         onClick="taobaocao()"
@@ -125,6 +134,37 @@ function taobaocao(){
                                 })
 
 
+}
+
+function timkiem(){
+var name = $("#key").val()
+  $.ajax({
+                               url: '/api/report/4/'+name,
+                               type:'GET',
+                               dataType:'json',
+                               contentType: "application/json",
+                               success: function (res){
+
+                                var row = ``;
+                                $.each(res,function(i,v){
+                                   row+=`  <tr>
+                                                               <td class="text-center">`+(i+1)+`</td>
+                                                               <td class="text-center"><span>`+v.ten+`</span></td>
+                                                               <td class="text-center"><span>`+v.ngaytao+`</span></td>
+                                                               <td class="text-center"><span>`+v.nguoitao+`</span></td>
+                                                               <td class="text-center"><a href="/download/baocaokho?nameFile=`+v.ten+`"
+                                                               style="font-size: 20px"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                                             </td>
+                                                            </tr>`
+                                  })
+
+                                  $("#data-list").html(row)
+
+                                },
+                               error: function (res) {
+                                  console.log(res)
+                               }
+                           })
 }
 
 </script>

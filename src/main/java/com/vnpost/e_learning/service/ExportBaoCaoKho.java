@@ -57,7 +57,7 @@ public class ExportBaoCaoKho {
             String soluongnhap = (baoCaoKho.getSoluongnhap()!=null)?baoCaoKho.getSoluongnhap().toString() : "0" ;
             String soluongxuat = (baoCaoKho.getSoluongxuat()!=null)?baoCaoKho.getSoluongxuat().toString() : "0" ;
             String soluongbanra = (baoCaoKho.getSoluongbanra()!=null)?baoCaoKho.getSoluongbanra().toString() : "0" ;
-
+            String soluongconlai = (baoCaoKho.getSoluongconlai()!=null)? baoCaoKho.getSoluongconlai().toString(): "0";
             makeCell(rowtValue,String.valueOf(stt++),0,0);
             makeCell(rowtValue,baoCaoKho.getMaHH().toString(),1,0);
             makeCell(rowtValue,baoCaoKho.getMaCode(),2,0);
@@ -65,7 +65,7 @@ public class ExportBaoCaoKho {
             makeCell(rowtValue,soluongnhap,4,0);
             makeCell(rowtValue,soluongxuat,5,0);
             makeCell(rowtValue,soluongbanra,6,0);
-            makeCell(rowtValue,baoCaoKho.getSoluongconlai().toString(),7,0);
+            makeCell(rowtValue,soluongconlai,7,0);
         }
 
     }

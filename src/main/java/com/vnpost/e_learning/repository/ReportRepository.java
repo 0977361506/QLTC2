@@ -14,6 +14,11 @@ public interface ReportRepository extends JpaRepository<Report,Integer> {
     @Query(value="select * from report where code = ?1",nativeQuery=true)
     public List<Report> findAllByCode(Integer code);
 
+    @Query(value="select * from report where code = ?1 and ten like ?2",nativeQuery=true)
+    public List<Report> findAllByCodeAndName(Integer code,String name);
+
+
+   //findAllByCodeAndName
     @Transactional
     @Modifying
     @Query(value="INSERT INTO report(ten,nguoitao,ngaytao,code) VALUES (?1, ?2, ?3 , ?4)",

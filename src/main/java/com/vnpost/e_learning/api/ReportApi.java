@@ -26,7 +26,12 @@ public class ReportApi {
     public List<Report> findAllByCode(@PathVariable("code") Integer code){
         return  reportRepository.findAllByCode(code);
     }
-
+    ///report/
+    @GetMapping("/report/{code}/{name}")
+    public List<Report> findAllByCode(@PathVariable("code") Integer code,
+    @PathVariable("name") String name){
+        return  reportRepository.findAllByCodeAndName(code,"%"+name+"%");
+    }
     // /report/export
 
     @GetMapping("/report/export")

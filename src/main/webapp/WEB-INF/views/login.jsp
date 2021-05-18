@@ -32,7 +32,7 @@
 <div class="w-100 d-flex justify-content-center align-items-center" style="height: 100vh">
     <div class="col-sm-4 text-center py-4 px-5 my-card position-relative">
         <form action="" id="formLogin" method="post" class="text-center">
-            <h3 class="mb-4">ADMIN E-LEARNING</h3>
+            <h3 class="mb-4">Hệ Thống Quản Lý Tài Chính</h3>
             <div class="form-group">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập">
             </div>
