@@ -18,7 +18,7 @@
                         <label>Tháng Năm</label>
                      </div>
                      <div>
-                        <input class="form-control dateDistribution" id="month" autocomplete="off" type="date" name="month">
+                        <input class="form-control dateDistribution" id="month" autocomplete="off" type="month" name="month">
                      </div>
                   </div>
                   <div class="col d-flex col-sm-auto justify-content-end" style="margin-left:100px">
@@ -28,10 +28,7 @@
                         style=" border-radius: 27px; " class="btn btn-info cursor-pointer">
                         <i class="fa fa-file-text-o"></i> Tạo báo cáo</button>
                      </div>
-                       <div class="col-auto">
-                                             <button id="collection-salary" type="button" style=" border-radius: 27px; " class="btn btn-success cursor-pointer">
-                                             <i class="fas fa-eye"></i> Xem trước </button>
-                        </div>
+
 
                   </div>
                </div>
@@ -87,7 +84,9 @@
                                                                <td class="text-center"><span>`+v.ten+`</span></td>
                                                                <td class="text-center"><span>`+v.ngaytao+`</span></td>
                                                                <td class="text-center"><span>`+v.nguoitao+`</span></td>
-                                                               <td class="text-center"><a href="" style="font-size: 20px"><i class="fa fa-download" aria-hidden="true"></i></a><a class="ml-3 delete-report" data-id="95c27925-fdff-4c27-b823-9f9ac772838a" style="font-size: 20px; cursor: pointer"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                                                               <td class="text-center"><a href="/download/baocaoluong?nameFile=`+v.ten+`"
+                                                               style="font-size: 20px"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                                             </td>
                                                             </tr>`
                                   })
 
@@ -102,18 +101,30 @@
 
 
 function taobaocao(){
-  $.ajax({
-                               url: '/api/report/export',
-                               type:'GET',
-                               dataType:'json',
-                               contentType: "application/json",
-                               success: function (res){
-                                 console.log(res)
-                                },
-                               error: function (res) {
-                                  console.log(res)
-                               }
-                           })
+  var month = $("#month").val()
+   $.ajax({
+                                    url: '/api/report/export?thang='+month,
+                                    type:'GET',
+                                    dataType:'json',
+                                    contentType: "application/json",
+                                    success: function (res){
+                                      //window.location.assign('/download/baocaoluong?nameFile=' + name);
+                                      if(res==500) alert("Không tìm thấy dữ liệu !")
+                                      else{
+                                       alert("Tạo báo cáo thành công !")
+                                       location.reload();
+
+                                       }
+                                      console.log(res)
+                                     },
+                                    error: function (res) {
+                                      //  window.location.assign('/download/baocaoluong?nameFile=baocaoQLTCv2.xlsx');
+                                      alert("Tạo báo cáo thành công !")
+                                      location.reload();
+                                    }
+                                })
+
+
 }
 
 </script>

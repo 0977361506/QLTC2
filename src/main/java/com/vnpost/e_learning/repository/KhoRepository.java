@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface KhoRepository extends JpaRepository<Kho,Integer> {
@@ -33,4 +34,33 @@ public interface KhoRepository extends JpaRepository<Kho,Integer> {
             ,nativeQuery=true)
     public void add( String tenkho ,
                      String ngaytao ,Integer iddm);
+
+
+
+    @Query(value="select ct.hang_hoaid as maHH , sum(ct.soluong) as soluongnhap \n" +
+            "from phieu_nhap , chitietphieunhap  as ct\n" +
+            "where phieu_nhap.id = ct.phieunhapid and ct.thang= ?1 \n" +
+            "group by ct.hang_hoaid",nativeQuery=true)
+    public List<Tuple> laychitietphieunhap(String thang);
+
+
+
+
+
+    @Query(value="select ct.hang_hoaid as maHH ,sum(ct.soluong)  as soluongxuat \n" +
+            "from phieu_xuat, chitietphieuxuat  as ct\n" +
+            "where phieu_xuat.id = ct.phieu_xuatid and ct.thang=?1 \n" +
+            "group by ct.hang_hoaid ",nativeQuery=true)
+    public List<Tuple> laychitietphieuxuat(String thang);
+
+
+
+
+    @Query(value="select ct.hang_hoaid as maHH , sum(ct.soluong) as soluongban \n" +
+            "from hoa_don, chitiethoadon  as ct\n" +
+            "where hoa_don.id = ct.hoa_donid and ct.thang=?1 \n" +
+            "\n" +
+            "group by ct.hang_hoaid ",nativeQuery=true)
+    public List<Tuple> laychitiethoadon(String thang);
+
 }

@@ -11,7 +11,10 @@ public class HomeController {
     public String index (){
         return "admin/index";
     }
-
+    @GetMapping("/login")
+    public String login (){
+        return "login";
+    }
     @GetMapping("/hanghoa/quanlyhanghoa")
     public String quanlyhanghoa (){
         return "admin/hanghoa/danhsachhanghoa";

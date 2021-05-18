@@ -70,4 +70,12 @@ public class NguoiDungApi {
         return "200";
     }
 
+    @GetMapping("/nguoidung/login")
+    public NguoiDung checkLogin(@RequestParam(name = "username") String username ,
+                                @RequestParam(name = "password") String password){
+        NguoiDung user= nguoiDungRepository.findByUsernameAndPassword(username,password);
+        if(user!=null && user.getRole()==1) return  user;
+        return  null;
+    }
+
 }

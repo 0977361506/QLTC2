@@ -46,5 +46,5 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung,Integer> {
             Integer role , Integer trangthai
     ) ;
 
-
+    public NguoiDung findByUsernameAndPassword(String username , String password);
 }
