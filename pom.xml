@@ -11,7 +11,7 @@
     <groupId>com.vnpost.e_learning</groupId>
     <artifactId>E_learning</artifactId>
     <version>1.0</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>E_learning</name>
     <description>Project_Elearning</description>
 
