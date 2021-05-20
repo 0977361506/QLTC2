@@ -31,6 +31,5 @@ public class PhieuThuSerVice {
     public void save(PhieuThuDTO hangHoaDTO){
         PhieuThu hangHoa = phieuThuConverter.convertToEntity(hangHoaDTO);
         phieuThuRepository.save(hangHoa);
-
     }
 }

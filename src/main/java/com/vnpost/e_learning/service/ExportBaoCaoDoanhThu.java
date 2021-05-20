@@ -1,39 +1,40 @@
-
-
 package com.vnpost.e_learning.service;
 
-        import com.vnpost.e_learning.bean.BaoCaoKho;
-        import com.vnpost.e_learning.bean.BaoCaoLuong;
-        import lombok.Getter;
-        import lombok.Setter;
-        import org.apache.commons.lang3.StringUtils;
-        import org.apache.poi.ss.usermodel.*;
-        import org.apache.poi.xssf.streaming.SXSSFCell;
-        import org.apache.poi.xssf.streaming.SXSSFRow;
-        import org.apache.poi.xssf.streaming.SXSSFSheet;
-        import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-        import org.springframework.stereotype.Service;
+import com.vnpost.e_learning.bean.BaoCaoKho;
+import com.vnpost.e_learning.bean.BaoCaoLuong;
+import com.vnpost.e_learning.entities.PhieuChi;
+import com.vnpost.e_learning.entities.PhieuThu;
+import lombok.Getter;
+import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFCell;
+import org.apache.poi.xssf.streaming.SXSSFRow;
+import org.apache.poi.xssf.streaming.SXSSFSheet;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.springframework.stereotype.Service;
 
-        import java.io.File;
-        import java.io.FileOutputStream;
-        import java.io.IOException;
-        import java.io.OutputStream;
-        import java.util.List;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 
 @Service
 @Getter
 @Setter
-public class ExportBaoCaoKho{
+public class ExportBaoCaoDoanhThu {
     private SXSSFWorkbook workbook;
     private SXSSFSheet sheet;
 
-    public ExportBaoCaoKho() {
+    public ExportBaoCaoDoanhThu() {
         workbook = new SXSSFWorkbook(10000000);
     }
 
 
 
-    public void writeContent(List<BaoCaoKho> baoCaoKhos){
+    public void writeContent(List<BaoCaoKho> baoCaoKhos, List<PhieuThu> phieuThus , List<PhieuChi> phieuChis){
 
 
         int tieude = 1;
@@ -70,6 +71,64 @@ public class ExportBaoCaoKho{
             makeCell(rowtValue,soluongconlai,7,0);
         }
 
+        int sttrowthuchi = 9+baoCaoKhos.size();  // khoản thu
+
+        CellStyle cellStyle= workbook.createCellStyle();
+        cellStyle.setWrapText(true);
+        cellStyle.setAlignment(HorizontalAlignment.CENTER);
+        Font font = sheet.getWorkbook().createFont();
+        font.setFontName("Times New Roman");
+        font.setBold(true);
+        cellStyle.setFont(font);
+
+
+        SXSSFRow hangkhoanthu = sheet.createRow(sttrowthuchi+2);  // danh sach khaorn thu
+
+        makeCell(hangkhoanthu,"STT",0,1);
+        makeCell(hangkhoanthu,"Tên khoản thu",1,1);
+        makeCell(hangkhoanthu,"Số tiền",2,1);
+        makeCell(hangkhoanthu,"Ghi chú",3,1);
+
+        int sttdsthu = 0 ;
+        int startrowphieuthu = sttrowthuchi+4 ;
+        for(PhieuThu phieuThu : phieuThus){
+            startrowphieuthu++;
+            SXSSFRow rowtValue = sheet.createRow(startrowphieuthu);
+            makeCell(rowtValue,String.valueOf(sttdsthu++),0,0);
+            makeCell(rowtValue,phieuThu.getNoiidungThu(),1,0);
+            makeCell(rowtValue,String.valueOf(phieuThu.getSotien()),2,0);
+            makeCell(rowtValue,phieuThu.getGhichu(),3,0);
+
+        }
+
+        // hiện thị khoản chi
+
+
+        int tieudephieuchi = 3+baoCaoKhos.size()+phieuThus.size();  // khoản thu
+
+//        sheet.addMergedRegion(new CellRangeAddress(tieudephieuchi,tieudephieuchi,0,5));
+
+        SXSSFRow hangkhoanchi = sheet.createRow(tieudephieuchi+2);  // danh sach khaorn thu
+
+        makeCell(hangkhoanchi,"STT",0,1);
+        makeCell(hangkhoanchi,"Tên khoản chi",1,1);
+        makeCell(hangkhoanchi,"Số tiền",2,1);
+        makeCell(hangkhoanchi,"Ghi chú",3,1);
+
+        int sttkhoanchi = 0 ;
+        int startrowphieutchi = sttrowthuchi+4 ;
+        for(PhieuChi phieuChi : phieuChis){
+            startrowphieutchi++;
+            SXSSFRow rowtValue = sheet.createRow(startrowphieutchi);
+            makeCell(rowtValue,String.valueOf(sttkhoanchi++),0,0);
+            makeCell(rowtValue,phieuChi.getNoidungchi(),1,0);
+            makeCell(rowtValue,String.valueOf(phieuChi.getSotien()),2,0);
+            makeCell(rowtValue,phieuChi.getGhichu(),3,0);
+
+        }
+
+
+
     }
 
 
@@ -105,14 +164,14 @@ public class ExportBaoCaoKho{
 
 
 
-    public  void createOutputFile(String excelFilePath, List<BaoCaoKho> baoCaoKhos) throws IOException {
+    public  void createOutputFile(String excelFilePath, List<BaoCaoKho> baoCaoKhos, List<PhieuThu> phieuThus , List<PhieuChi> phieuChis) throws IOException {
         File file = new File(StringUtils.substringBeforeLast(excelFilePath, "/"));
         System.out.println(StringUtils.substringBeforeLast(excelFilePath, "/"));
         if (!file.exists()) {
             file.mkdirs();
         }
 
-        writeContent(baoCaoKhos);
+        writeContent(baoCaoKhos,phieuThus,phieuChis);
 
         try (OutputStream os = new FileOutputStream(excelFilePath)) {
             workbook.write(os);

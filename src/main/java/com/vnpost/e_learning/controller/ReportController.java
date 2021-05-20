@@ -49,4 +49,17 @@ public class ReportController {
         }
     }
 
+    // baocaodoanhthu
+
+    @GetMapping("/baocaodoanhthu")
+    public void baocaodoanhthu(@RequestParam(name = "nameFile")  String nameFile, HttpServletResponse response)
+            throws IOException {
+        File file = new File("D://postman-delivery//report//baocaocoha//" + nameFile);
+        try {
+            DownloadUtils.download(response, file);
+        } catch (Exception e) {
+            response.sendRedirect("/admin/baocao/baocaodoanhthu");
+        }
+    }
+
 }

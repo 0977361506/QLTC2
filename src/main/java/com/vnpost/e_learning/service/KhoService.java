@@ -107,6 +107,8 @@ public class KhoService {
             baoCaoKho.setMaCode(String.valueOf(hangHoa.getMaHH()));
             baoCaoKho.setMaHH(hangHoa.getId());
             baoCaoKho.setTenHH(hangHoa.getTenHH());
+            baoCaoKho.setGia(hangHoa.getGia());
+            baoCaoKho.setGiamgia(Float.parseFloat("0"));
             for(DanhSachNhapHang ds : danhSachNhapHangs){
                 if(hangHoa.getId()==ds.getMaHH()){
                    baoCaoKho.setSoluongnhap(ds.getSoluongnhap());
@@ -146,6 +148,8 @@ public class KhoService {
             baoCaoKho.setMaHH(hangHoa.getId());
             baoCaoKho.setTenHH(hangHoa.getTenHH());
 
+            baoCaoKho.setGia(hangHoa.getGia());
+            baoCaoKho.setGiamgia(hangHoa.getGiamgia());
 
             for(DanhSachBanHang ds : danhSachBanHangs){
                 if(hangHoa.getId()==ds.getMaHH()){

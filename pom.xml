@@ -11,7 +11,7 @@
     <groupId>com.vnpost.e_learning</groupId>
     <artifactId>E_learning</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>E_learning</name>
     <description>Project_Elearning</description>
 
@@ -197,7 +197,13 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/CKFinder-2.6.2.1.jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>Thumbnailator</artifactId>
+            <version>0.4.8</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/Thumbnailator-0.4.8.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

@@ -43,26 +43,32 @@ public class ExportBaoCaoBanHang {
         makeCell(rowtieude,"Mã hàng hóa",1,1);
         makeCell(rowtieude,"Mã code",2,1);
         makeCell(rowtieude,"Tên hàng hóa",3,1);
-
-        makeCell(rowtieude,"Số lượng bán ra",4,1);
+        makeCell(rowtieude,"Giá bán ra",4,1);
+        makeCell(rowtieude,"Số lượng bán ra",5,1);
 
 
         int rownum = 2 ;
         int stt = 0 ;
+        Double tongtien = 0.0 ;
         for (BaoCaoKho baoCaoKho : baoCaoKhos) {
             rownum++;
             SXSSFRow rowtValue = sheet.createRow(rownum);
 
             String soluongbanra = (baoCaoKho.getSoluongbanra()!=null)?baoCaoKho.getSoluongbanra().toString() : "0" ;
-
+            tongtien+= (Integer.parseInt(soluongbanra)*baoCaoKho.getGia());
             makeCell(rowtValue,String.valueOf(stt++),0,0);
             makeCell(rowtValue,baoCaoKho.getMaHH().toString(),1,0);
             makeCell(rowtValue,baoCaoKho.getMaCode(),2,0);
             makeCell(rowtValue,baoCaoKho.getTenHH(),3,0);
-
-            makeCell(rowtValue,soluongbanra,4,0);
+            makeCell(rowtValue,baoCaoKho.getGia().toString(),4,0);
+            makeCell(rowtValue,soluongbanra,5,0);
 
         }
+
+        int stttongtien = 4+baoCaoKhos.size();
+        SXSSFRow rowtongtien = sheet.createRow(stttongtien);
+        makeCell(rowtongtien,"Doanh thu = ",3,1);
+        makeCell(rowtongtien,tongtien.toString(),4,1);
 
     }
 

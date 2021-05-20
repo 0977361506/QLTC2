@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Tuple;
 import java.util.List;
 
 public interface PhieuChiRepository extends JpaRepository<PhieuChi,Integer> {
@@ -31,6 +32,9 @@ public interface PhieuChiRepository extends JpaRepository<PhieuChi,Integer> {
                      String noidungthu , String sotk ,Float sotien , String tennguoinop ,
                      Integer idnguoidung);
 
+
+    @Query(value="select * from phieu_chi where thang= ?1",nativeQuery=true)
+    public List<PhieuChi> layphieuchitheothang(String thang);
 
 
 }

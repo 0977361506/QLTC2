@@ -17,6 +17,9 @@ public class BaoCaoKho {
     private  Integer soluongbanra ;
     private Integer soluongconlai ;
 
+    private  Float gia ;
+    private Float giamgia ;
+
     public BaoCaoKho(Integer maHH, String maCode, String tenHH,
                      Integer soluongnhap, Integer soluongxuat, Integer soluongbanra ,Integer soluongconlai) {
         this.maHH = maHH;
