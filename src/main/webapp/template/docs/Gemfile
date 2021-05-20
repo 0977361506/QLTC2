@@ -1,7 +1,0 @@
-source 'https://rubygems.org'
-
-gem "jekyll", "~> 3.8.5"
-
-gem "rouge"
-
-gem 'giThub-pages', group: :jekyll_plugins
