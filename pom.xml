@@ -197,13 +197,7 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/CKFinder-2.6.2.1.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>Thumbnailator</artifactId>
-            <version>0.4.8</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Thumbnailator-0.4.8.jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
