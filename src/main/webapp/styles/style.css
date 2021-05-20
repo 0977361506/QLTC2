@@ -1,0 +1,58 @@
+ strong {
+    font-weight: 600;
+    font-size: 12px;
+    margin-left: 3px ;
+}
+div.contact_forget_password{
+    margin-top: 20px;
+}
+.contact_info_text > p{
+    font-size: 15px;
+    color: #384158;
+}
+div.contact_info_title{
+     color: #384158;
+}
+.contact_info_title {
+    font-size: 32px;
+}
+.contact_info_title {
+    /* font-family: 'Roboto Slab', serif; */
+    font-size: 30px;
+    font-weight: 700;
+    color: #384158;
+}
+.rowsss{
+    margin-top: -20px;
+    height: 300px;
+    margin-left: 100px;
+}
+
+h4{
+    color: #f6821f;
+    font-size:20px;
+}
+#fo{
+    margin-bottom: 20px;
+}
+.buttons{
+    width: 150px;
+    height: 46px;
+    background: #0060aa;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFFFFF;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    margin-top: 15px;
+}
+div.content{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    display: block;
+    padding: 0px;
+}
+

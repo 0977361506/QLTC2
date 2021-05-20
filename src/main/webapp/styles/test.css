@@ -1,0 +1,84 @@
+@font-face {
+font-family: "Digital";
+src: url("Digital Numbers 400.ttf");
+
+}
+.countdown-test {
+  font-family: 'Digital';
+      font-size: 30px;
+      background: red;
+      color: white;
+      padding: 5px 20px;
+      border-radius: 5px;
+}
+html,.main {
+      background: #e9ecf3;
+}
+.toolbars {
+      background: #FCB71E ;
+}
+.color-light * {
+  color: white;
+}
+.color-dark * {
+  color: black;
+}
+.menu-item {
+  padding: 0 3px;
+}
+.menu-item:not(:last-child)::after {
+  display: inline-block;
+    font-family: 'FontAwesome';
+    content: '\f105';
+    margin-left: 7px;
+    margin-right: 4px;
+
+    color: #DFDFDF;
+}
+.login-acc-inf {
+  background-color: #004793;
+}
+.dropdown-item {
+  padding: 5px 10px;
+}
+.color-primary, .color-primary *{
+  color: #004793;
+}
+.btn-danger {
+  background-color: #f6821f;
+border-color: #dc6500;
+}
+.round-test-title {
+  font-size: 20px;
+}
+.color-red {
+  color:#e7505a;
+}
+.answers label {
+  margin-bottom: 0;
+}
+.answer-result {
+  border: 1px solid;
+  border-radius: 5px;
+  min-width: 70px;
+  text-align: center;
+}
+.result-set .row {
+  margin-left: -5px;
+}
+.result-set .row > .col-auto {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.note {
+  font-style: italic;
+  color: blue;
+}
+@media only screen and (max-width: 600px) {
+  .login-acc-inf.btn-small {
+    font-size: 12px;
+  }
+  .menu-item {
+    font-size: 13px;
+  }
+}
