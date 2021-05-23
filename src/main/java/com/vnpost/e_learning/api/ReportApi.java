@@ -10,10 +10,16 @@ import com.vnpost.e_learning.repository.PhieuChiRepository;
 import com.vnpost.e_learning.repository.PhieuThuRepository;
 import com.vnpost.e_learning.repository.ReportRepository;
 import com.vnpost.e_learning.service.*;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -173,20 +179,58 @@ public class ReportApi {
     @GetMapping("/report/baocaodoanhthu")
     public String  baocaodoanhthu (@RequestParam("thang") String thang)  throws IOException {
         String [] mang = thang.split("-");
-        ExportBaoCaoDoanhThu excellServiceOutputExporter = new ExportBaoCaoDoanhThu();
+        // khởi tạo
+        ExportBaoCaoDoanhThu exportBaoCaoDoanhThu = new ExportBaoCaoDoanhThu();
+        ExportBaoCaoPhieuThu exportBaoCaoPhieuThu = new ExportBaoCaoPhieuThu();
+        ExportBaoCaoPhieuChi exportBaoCaoPhieuChi = new ExportBaoCaoPhieuChi();
+        ExportBangCong exportBangCong = new ExportBangCong();
+        ExcellServiceOutputExporter excellServiceOutputExporter = new ExcellServiceOutputExporter();
+
+        // tạo sheeet
+        SXSSFWorkbook workbook = new SXSSFWorkbook();
+        workbook.createSheet("Báo cáo tồn kho");
+        workbook.createSheet("Chi tiết phiếu thu");
+        workbook.createSheet("Chi tiết phiếu chi");
+        workbook.createSheet("Lương nhân viên");
+
+
+        // xử lí
         int code = (int) Math.floor(((Math.random() * 899999) + 100000));
         String nameFile = "baocaodoanhthu"+code+".xlsx" ;
         String path = "D://postman-delivery//report//baocaocoha//"+nameFile ;
 
-        List<BaoCaoKho> baoCaoKhos = khoService.baocaohanghoa(mang[1]);
 
         SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY hh:mm:ss");
         String dateString=sdf.format(new Date());
-
         //String ten , String nguoitao , String ngaytao , Integer code
+
+        // lấy ra dữ lieu
+        List<BaoCaoKho> baoCaoKhos = khoService.baocaohanghoa(mang[1]);
         List<PhieuChi> phieuChis = phieuChiRepository.layphieuchitheothang(mang[1]);
         List<PhieuThu> phieuThus = phieuThuRepository.layphieuthutheothang(mang[1]);
-        excellServiceOutputExporter.createOutputFile(path,baoCaoKhos,phieuThus,phieuChis);
+        List<BaoCaoLuong> baoCaoLuongs = baoCaoLuongService.baocaoluong(mang[1]);
+
+        // ghi vào file excell
+        exportBaoCaoDoanhThu.createOutputFile(path,baoCaoKhos,workbook);
+        exportBaoCaoPhieuChi.createOutputFile(path,phieuChis,workbook);
+        exportBaoCaoPhieuThu.createOutputFile(path,phieuThus,workbook);
+        excellServiceOutputExporter.createFileForBaoCaoTong(baoCaoLuongs,workbook);
+        // lưu vào ổ
+
+        File file = new File(StringUtils.substringBeforeLast(path, "/"));
+        System.out.println(StringUtils.substringBeforeLast(path, "/"));
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        try (OutputStream os = new FileOutputStream(path)) {
+            workbook.write(os);
+            workbook.close();
+
+        }
+
+
+        // save file báo cáo
         reportRepository.saveReport(nameFile,"admin",dateString,2);
 
         return nameFile ;

@@ -33,13 +33,15 @@
                   <div class="col d-flex col-sm-auto justify-content-end" style="margin-left:100px">
                      <div class="col-auto">
                         <button id="collection-salary" type="button"
-                        onClick="taobaocao()"
+                        onClick="taobaocao(this)"
+                        check="1"
                         style=" border-radius: 27px; " class="btn btn-info cursor-pointer">
                         <i class="fa fa-file-text-o"></i> Tạo báo cáo</button>
                      </div>
   <div class="col-auto">
                                                                   <button id="xemtruoc" type="button"
                                                                    onClick="showxemtruoc(this)"
+                                                                   check="0"
                                                                    style=" border-radius: 27px; " class="btn btn-success cursor-pointer">
                                                                   <i class="fas fa-eye"></i> Xem trước </button>
 
@@ -169,7 +171,7 @@
     })
 
 
-function taobaocao(){
+function doExport(check){
   var month = $("#month").val()
    if(month){
         $.ajax({
@@ -179,25 +181,43 @@ function taobaocao(){
                                          contentType: "application/json",
                                          success: function (res){
                                            //window.location.assign('/download/baocaoluong?nameFile=' + name);
-                                           if(res==500) alert("Không tìm thấy dữ liệu !")
-                                           else{
-                                            alert("Tạo báo cáo thành công !")
-                                            location.reload();
 
-                                            }
-                                           console.log(res)
+                                           if(check==1){
+                                                   if(res==500) alert("Không tìm thấy dữ liệu !")
+                                                    else{
+                                                           alert("Tạo báo cáo thành công !")
+                                                          // location.reload();
+                                                         }
+                                                   console.log(res)
+                                           }else{
+                                               var domain = window.location.hostname;
+                                                window.open("https://view.officeapps.live.com/op/embed.aspx?src="+domain+"/download/baocaodoanhthu?nameFile="+res);
+                                           }
                                           },
                                          error: function (res) {
                                            //  window.location.assign('/download/baocaoluong?nameFile=baocaoQLTCv2.xlsx');
-                                           alert("Tạo báo cáo thành công!")
-                                           location.reload();
+                                           if(check==1){
+                                            alert("Tạo báo cáo thành công!")
+                                            location.reload();
+                                           }
+                                            else{
+                                               var domain = window.location.hostname;
+                                                window.open("https://view.officeapps.live.com/op/embed.aspx?src="+domain+"/download/baocaodoanhthu?nameFile="+res.responseText);
+                                           }
+
                                          }
                                      })
    }else alert("Chọn tháng cần xuất báo cáo !")
-
-
+ // window.open("https://view.officeapps.live.com/op/embed.aspx?src="+domain+"/postman-file/download/collection-salary?nameFile="+data.data);
 
 }
+
+
+function taobaocao(e){
+var check = $(e).attr("check")
+doExport(check)
+}
+
 
 function timkiem(){
 var name = $("#key").val()
@@ -237,39 +257,10 @@ var name = $("#key").val()
 
 
 function showxemtruoc(e){
-  var month = $("#month").val()
-  if(month){
-   $.ajax({
-                                      url: '/api/report/showDetail/baocaokho?thang='+month,
-                                      type:'GET',
-                                      dataType:'json',
-                                      contentType: "application/json",
-                                      success: function (res){
-                                        console.log(res)
-                                  var row = ``;
-                                $.each(res,function(i,v){
-                                   row+=`  <tr>
-                                                               <td class="text-center">`+(i+1)+`</td>
-                                                               <td class="text-center"><span>`+v.maHH+`</span></td>
-                                                               <td class="text-center"><span>`+v.maCode+`</span></td>
-                                                               <td class="text-center"><span>`+v.tenHH+`</span></td>
-                                                               <td class="text-center"><span>`+((v.soluongnhap !=null)?v.soluongnhap:0)+`</span></td>
-                                                               <td class="text-center"><span>`+((v.soluongxuat !=null)?v.soluongxuat:0)+`</span></td>
-                                                               <td class="text-center">`+((v.soluongbanra !=null)?v.soluongbanra:0)+`</td>
-                                                                <td class="text-center">`+((v.soluongconlai !=null)?v.soluongconlai:0)+`</td>
 
-                                                            </tr>`
-                                  })
+var check = $(e).attr("check")
 
-                                    $("#danhsachluong").html(row)
-                                     $("#xemchitiet").modal("show")
-                                       },
-                                      error: function (res) {
-                                        console.log(res)
-                                      }
-                                  })
-  }else alert("Chọn tháng cần xem trước !")
-
+doExport(check)
 
 }
 
