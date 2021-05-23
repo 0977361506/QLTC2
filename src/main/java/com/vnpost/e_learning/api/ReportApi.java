@@ -1,8 +1,13 @@
 package com.vnpost.e_learning.api;
 
+import com.vnpost.e_learning.bean.BangCongTheoNgay;
 import com.vnpost.e_learning.bean.BaoCaoKho;
 import com.vnpost.e_learning.bean.BaoCaoLuong;
+import com.vnpost.e_learning.entities.PhieuChi;
+import com.vnpost.e_learning.entities.PhieuThu;
 import com.vnpost.e_learning.entities.Report;
+import com.vnpost.e_learning.repository.PhieuChiRepository;
+import com.vnpost.e_learning.repository.PhieuThuRepository;
 import com.vnpost.e_learning.repository.ReportRepository;
 import com.vnpost.e_learning.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +21,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ReportApi {
+    @Autowired
+    private PhieuChiRepository phieuChiRepository ;
+    @Autowired
+    private PhieuThuRepository phieuThuRepository ;
     @Autowired
     ReportRepository reportRepository ;
     @Autowired
@@ -55,7 +64,24 @@ public class ReportApi {
         return "500";
     }
 
+    @GetMapping("/report/showDetail/baoCaoLuong")
+    public List<BaoCaoLuong> showDetailBaoCaoLuong (@RequestParam("thang") String thang)  throws IOException {
+        String [] mang = thang.split("-");
+        List<BaoCaoLuong> baoCaoLuongs = baoCaoLuongService.baocaoluong(mang[1]);
+        return baoCaoLuongs;
+    }
 
+    // /report/deleteBaoCaoLuong
+    @GetMapping("/report/deleteBaoCao/{id}")
+    public String deleteBaoCao (@PathVariable("id")Integer id) {
+        try {
+            reportRepository.deleteReport(id);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "500";
+        }
+        return "200";
+    }
     @GetMapping("/report/baocaokho")
     public String  exportbaocaokho (@RequestParam("thang") String thang)  throws IOException {
         String [] mang = thang.split("-");
@@ -100,4 +126,73 @@ public class ReportApi {
         }
         return "500";
     }
+
+
+    @GetMapping("/report/showDetail/baoCaoLuongBanHang")
+    public List<BaoCaoKho> baoCaoLuongBanHang (@RequestParam("thang") String thang)  throws IOException {
+        String [] mang = thang.split("-");
+        List<BaoCaoKho> baoCaoKhos = khoService.baocaohanghoa(mang[1]);
+        return baoCaoKhos;
+    }
+
+
+    @GetMapping("/report/showDetail/baocaokho")
+    public List<BaoCaoKho> baocaokho (@RequestParam("thang") String thang)  throws IOException {
+        String [] mang = thang.split("-");
+        List<BaoCaoKho> baoCaoKhos = khoService.baocaokho(mang[1]);
+        return baoCaoKhos;
+    }
+
+
+//    @GetMapping("/report/showDetail/baocaotaichinh")
+//    public List<BaoCaoKho> baocaotaichinh (@RequestParam("thang") String thang)  throws IOException {
+//        String [] mang = thang.split("-");
+//        List<BaoCaoKho> baoCaoKhos = khoService.baocaokho(mang[1]);
+//        return baoCaoKhos;
+//    }
+//
+
+    //  exportChamCong
+
+    @PostMapping("/report/exportChamCong")
+    public String  exportChamCong (@RequestBody List<BangCongTheoNgay> bangCongTheoNgays)  throws IOException {
+
+        ExportBangCong excellServiceOutputExporter = new ExportBangCong();
+        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
+        String nameFile = "bangcongnhanvien"+code+".xlsx" ;
+        String path = "D://postman-delivery//report//baocaocoha//"+nameFile ;
+        excellServiceOutputExporter.createOutputFile(path,bangCongTheoNgays);
+
+        return nameFile ;
+
+    }
+
+
+
+    // bao cao doanh thu
+    @GetMapping("/report/baocaodoanhthu")
+    public String  baocaodoanhthu (@RequestParam("thang") String thang)  throws IOException {
+        String [] mang = thang.split("-");
+        ExportBaoCaoDoanhThu excellServiceOutputExporter = new ExportBaoCaoDoanhThu();
+        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
+        String nameFile = "baocaodoanhthu"+code+".xlsx" ;
+        String path = "D://postman-delivery//report//baocaocoha//"+nameFile ;
+
+        List<BaoCaoKho> baoCaoKhos = khoService.baocaohanghoa(mang[1]);
+
+        SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY hh:mm:ss");
+        String dateString=sdf.format(new Date());
+
+        //String ten , String nguoitao , String ngaytao , Integer code
+        List<PhieuChi> phieuChis = phieuChiRepository.layphieuchitheothang(mang[1]);
+        List<PhieuThu> phieuThus = phieuThuRepository.layphieuthutheothang(mang[1]);
+        excellServiceOutputExporter.createOutputFile(path,baoCaoKhos,phieuThus,phieuChis);
+        reportRepository.saveReport(nameFile,"admin",dateString,2);
+
+        return nameFile ;
+
+
+    }
+
+
 }

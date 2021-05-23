@@ -127,6 +127,13 @@
                   </a>
                </li>
                <li class="nav-item">
+                                 <a href="/admin/luong/chamcong" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Chấm công nhân viên</p>
+                                 </a>
+                              </li>
+
+               <li class="nav-item">
                   <a href="/admin/luong/tinhluongnhanvien" class="nav-link">
                      <i class="far fa-circle nav-icon"></i>
                      <p>Tính lương nhân viên</p>

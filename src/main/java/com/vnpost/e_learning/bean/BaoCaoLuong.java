@@ -20,14 +20,14 @@ public class BaoCaoLuong {
     private Double giatrithue ;
     private  Double heso ;
     private  Double luongcoban ;
-    private  Integer songaylamviec ;
+    private  Double songaylamviec ;
     private  String thanglamviec ;
-
+    private  Integer idNV ;
     public BaoCaoLuong(String hoten, String mand,
                        String chucdanh, String mathue,
                        String tenthue, Double giatrithue,
                        Double heso, Double luongcoban,
-                       Integer songaylamviec, String thanglamviec) {
+                       Double songaylamviec, String thanglamviec) {
         this.hoten = hoten;
         this.mand = mand;
         this.chucdanh = chucdanh;
@@ -38,6 +38,24 @@ public class BaoCaoLuong {
         this.luongcoban = luongcoban;
         this.songaylamviec = songaylamviec;
         this.thanglamviec = thanglamviec;
+    }
+
+    public BaoCaoLuong(String hoten, String mand,
+                       String chucdanh, String mathue,
+                       String tenthue, Double giatrithue,
+                       Double heso, Double luongcoban,
+                       Double songaylamviec, String thanglamviec,Integer idNV) {
+        this.hoten = hoten;
+        this.mand = mand;
+        this.chucdanh = chucdanh;
+        this.mathue = mathue;
+        this.tenthue = tenthue;
+        this.giatrithue = giatrithue;
+        this.heso = heso;
+        this.luongcoban = luongcoban;
+        this.songaylamviec = songaylamviec;
+        this.thanglamviec = thanglamviec;
+        this.idNV = idNV ;
     }
 
     public BaoCaoLuong() {

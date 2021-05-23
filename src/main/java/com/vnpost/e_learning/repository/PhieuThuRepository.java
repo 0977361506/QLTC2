@@ -27,4 +27,8 @@ public interface PhieuThuRepository extends JpaRepository<PhieuThu,Integer> {
                      String maphieu , String ngaytao,
                      String noidungthu , String sotk ,Float sotien , String tennguoinop ,
                      Integer idnguoidung);
+
+
+    @Query(value="select * from phieu_thu where thang= ?1",nativeQuery=true)
+    public List<PhieuThu> layphieuthutheothang(String thang);
 }

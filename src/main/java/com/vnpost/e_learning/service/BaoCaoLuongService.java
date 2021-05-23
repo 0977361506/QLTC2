@@ -28,7 +28,7 @@ public class BaoCaoLuongService {
                                     item.get("giatrithue", Double.class),
                                     item.get("heso", Double.class),
                                     item.get("luongcoban", Double.class),
-                                    item.get("songaylamviec", Integer.class),
+                                    item.get("songaylamviec", Double.class),
                                     item.get("thanglamviec", String.class)
                             )
                     )

@@ -32,5 +32,8 @@ public interface PhieuChiRepository extends JpaRepository<PhieuChi,Integer> {
                      Integer idnguoidung);
 
 
+    @Query(value="select * from phieu_chi where thang= ?1",nativeQuery=true)
+    public List<PhieuChi> layphieuchitheothang(String thang);
+
 
 }

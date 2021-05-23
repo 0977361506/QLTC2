@@ -25,4 +25,11 @@ public interface ReportRepository extends JpaRepository<Report,Integer> {
             nativeQuery=true)
     public void saveReport(String ten , String nguoitao , String ngaytao , Integer code) ;
 
+    @Transactional
+    @Modifying
+    @Query(value="DELETE  FROM report  WHERE id= ?1",
+            nativeQuery=true)
+    public void deleteReport( Integer id) ;
+
+
 }

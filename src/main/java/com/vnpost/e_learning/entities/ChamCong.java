@@ -28,6 +28,7 @@ public class ChamCong implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
@@ -36,9 +37,10 @@ public class ChamCong implements Serializable {
     @Column(name = "Ghichu")
     private String ghichu;
     @Column(name = "Songaylamviec")
-    private Integer songaylamviec;
+    private Double songaylamviec;
     @JoinColumn(name = "NguoiDungID", referencedColumnName = "ID")
     @ManyToOne(optional = false)
     private NguoiDung nguoiDungID;
+    private  String ngaychamcong ;
 
 }

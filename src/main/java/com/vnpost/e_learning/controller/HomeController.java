@@ -68,6 +68,12 @@ public class HomeController {
         return "admin/luong/tinhluongnhanvien";
     }
 
+    @GetMapping("/luong/chamcong")
+    public String chamcong (){
+        return "admin/luong/chamcong";
+    }
+
+
     @GetMapping("/thuchi/phieuchi")
     public String phieuchi (){
         return "admin/thuchi/quanlyphieuchi";

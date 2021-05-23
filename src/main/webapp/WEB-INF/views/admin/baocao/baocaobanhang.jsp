@@ -37,7 +37,11 @@
                         style=" border-radius: 27px; " class="btn btn-info cursor-pointer">
                         <i class="fa fa-file-text-o"></i> Tạo báo cáo</button>
                      </div>
-
+                         <div class="col-auto">
+                                                                  <button id="xemtruoc" type="button"
+                                                                   onClick="showxemtruoc(this)"
+                                                                   style=" border-radius: 27px; " class="btn btn-success cursor-pointer">
+                                                                  <i class="fas fa-eye"></i> Xem trước </button>
 
                   </div>
                </div>
@@ -46,7 +50,7 @@
          <!-- /.card-header -->
          <div class="  p-0 mt-5">
             <div>
-               <h4>Danh sách file lương nhân viên : </h4>
+               <h4>Danh sách file báo cáo bán hàng : </h4>
             </div>
             <table class="table table-hover  table_competition">
                <tbody>
@@ -76,6 +80,50 @@
    </div>
 </div>
 
+ <div class="modal" id="xemchitiet">
+      <div class="modal-dialog modal-lg">
+         <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body ">
+               <form>
+                  <div class="row">
+                     <div class="col col-sm-12" >
+                        <h3 class="showtime text-center" ><b>Danh sách mặt hàng bán ra theo tháng </b></h4>
+                        <table class="table table-striped" style="margin-top:15px">
+                           <thead>
+                              <tr>
+                                 <th>STT</th>
+                                 <th>Mã hàng hóa</th>
+                                 <th>Mã code</th>
+                                 <th >Tên hàng hóa</th>
+                                 <th>Số lượng bán ra</th>
+                              </tr>
+                           </thead>
+                           <tbody id="danhsachluong">
+
+                           </tbody>
+                        </table>
+
+
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+               <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
 
 <script>
     $(document).ready(function () {
@@ -95,6 +143,10 @@
                                                                <td class="text-center"><span>`+v.nguoitao+`</span></td>
                                                                <td class="text-center"><a href="/download/baocaobanhang?nameFile=`+v.ten+`"
                                                                style="font-size: 20px"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                                                     <a class="ml-3 delete-report" href='#'
+                                                                                                   id="`+v.id+`"
+                                                                                                   onClick="xoabanghi(this)" style="font-size: 20px; cursor: pointer">
+                                                                                                  <i class="fa fa-trash" aria-hidden="true"></i></a>
                                                              </td>
                                                             </tr>`
                                   })
@@ -153,8 +205,12 @@ var name = $("#key").val()
                                                                <td class="text-center"><span>`+v.ngaytao+`</span></td>
                                                                <td class="text-center"><span>`+v.nguoitao+`</span></td>
                                                               <td class="text-center"><a href="/download/baocaobanhang?nameFile=`+v.ten+`"
-                                                                                                                             style="font-size: 20px"><i class="fa fa-download" aria-hidden="true"></i></a>
-                                                                                                                           </td>
+                                                              style="font-size: 20px"><i class="fa fa-download" aria-hidden="true"></i></a>
+                                                               <a class="ml-3 delete-report" href='#'
+                                                                id="`+v.id+`"
+                                                                onClick="xoabanghi(this)" style="font-size: 20px; cursor: pointer">
+                                                               <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                               </td>
                                                             </tr>`
                                   })
 
@@ -165,6 +221,62 @@ var name = $("#key").val()
                                   console.log(res)
                                }
                            })
+}
+
+
+function showxemtruoc(e){
+  var month = $("#month").val()
+  if(month){
+   $.ajax({
+                                      url: '/api/report/showDetail/baoCaoLuongBanHang?thang='+month,
+                                      type:'GET',
+                                      dataType:'json',
+                                      contentType: "application/json",
+                                      success: function (res){
+                                        console.log(res)
+                                  var row = ``;
+                                $.each(res,function(i,v){
+                                   row+=`  <tr>
+                                                               <td class="text-center">`+(i+1)+`</td>
+                                                               <td class="text-center"><span>`+v.maHH+`</span></td>
+                                                               <td class="text-center"><span>`+v.maCode+`</span></td>
+                                                               <td class="text-center"><span>`+v.tenHH+`</span></td>
+                                                               <td class="text-center">`+((v.soluongbanra !=null)?v.soluongbanra:0)+`</td>
+
+                                                            </tr>`
+                                  })
+
+                                    $("#danhsachluong").html(row)
+                                     $("#xemchitiet").modal("show")
+                                       },
+                                      error: function (res) {
+                                        console.log(res)
+                                      }
+                                  })
+  }else alert("Chọn tháng cần xem trước !")
+
+
+}
+
+
+
+function xoabanghi(e){
+var id = $(e).attr("id")
+if(confirm("Bạn chắc chắn muốn xóa ?")){
+          $.ajax({
+                                  url: '/api/report/deleteBaoCao/'+id,
+                                  type:'GET',
+                                  dataType:'json',
+                                  contentType: "application/json",
+                                  success: function (res){
+                                        alert("Xóa bản ghi thành công !")
+                                       location.reload()
+                                    }
+                                  ,error: function (res) {
+                                     console.log(res)
+                                  }
+                              })
+ }
 }
 
 </script>
