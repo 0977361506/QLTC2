@@ -35,7 +35,7 @@
 
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
-        <a class="nav-link"  href="/admin/login">
+        <a class="nav-link"  href="/admin/logout">
        <i class="fas fa-sign-out-alt" style="font-size:24px"></i>
 
         </a>

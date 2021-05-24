@@ -4,6 +4,7 @@ import com.vnpost.e_learning.dto.DanhMucHangHoaDTO;
 import com.vnpost.e_learning.dto.HangHoaDTO;
 import com.vnpost.e_learning.entities.DanhMucHangHoa;
 import com.vnpost.e_learning.repository.DanhmucHangHoaRepository;
+import com.vnpost.e_learning.service.BaoMatService;
 import com.vnpost.e_learning.service.DanhMucHangHoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,10 @@ import java.util.List;
 public class DanhMucHangHoaApi {
     @Autowired
     private DanhMucHangHoaService service ;
+    
+    @Autowired
+    private BaoMatService baoMatService ;
+
     @Autowired
     private DanhmucHangHoaRepository danhmucHangHoaRepository ;
     @GetMapping("/category")
@@ -31,6 +36,7 @@ public class DanhMucHangHoaApi {
 
     @RequestMapping("/category/timkiem/{name}")
     public List<DanhMucHangHoa> timkiem(@PathVariable("name") String name){
+        baoMatService.save("Tìm kiếm","Tìm kiếm danh mục hàng hóa","/category/timkiem/"+name);
         return danhmucHangHoaRepository.timkiem("%"+name+"%");
     }
 
@@ -39,6 +45,7 @@ public class DanhMucHangHoaApi {
         Date date = new Date();
         SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY");
         String dateString=sdf.format(date);
+        baoMatService.save("Cập nhật","Cập nhật danh mục hàng hóa","/category/update/");
         danhmucHangHoaRepository.savedanhmuc(danhMucHangHoa.getTenDM(),danhMucHangHoa.getKhoid(),
                  dateString
                 ,danhMucHangHoa.getId());
@@ -50,6 +57,7 @@ public class DanhMucHangHoaApi {
         Date date = new Date();
         SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/YYYY");
         String dateString=sdf.format(date);
+        baoMatService.save("Thêm mới","Thêm mới danh mục hàng hóa","/category/add/");
         danhmucHangHoaRepository.add(danhMucHangHoa.getTenDM(),danhMucHangHoa.getKhoid(),dateString);
         return  "200";
     }

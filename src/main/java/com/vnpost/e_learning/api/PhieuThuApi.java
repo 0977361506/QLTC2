@@ -3,6 +3,7 @@ package com.vnpost.e_learning.api;
 import com.vnpost.e_learning.entities.Kho;
 import com.vnpost.e_learning.entities.PhieuThu;
 import com.vnpost.e_learning.repository.PhieuThuRepository;
+import com.vnpost.e_learning.service.BaoMatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ import java.util.List;
 @RequestMapping("/api")
 public class PhieuThuApi {
     @Autowired
+    private BaoMatService baoMatService ;
+
+    @Autowired
     private PhieuThuRepository phieuThuRepository ;
     @GetMapping("/phieuthu")
     public List<PhieuThu> phieuThus(){
@@ -22,12 +26,15 @@ public class PhieuThuApi {
 
 
     @RequestMapping("/phieuthu/{id}")
-    public PhieuThu getPhieuthuDetail(@PathVariable("id") Integer id){
+    public PhieuThu getPhieuthuDetail(@PathVariable("id") Integer id)
+    {
+        baoMatService.save("Xem chi tiết","Xem chi tiết phiếu thu","/api/phieuthu/"+id);
         return phieuThuRepository.findById(id).get();
     }
 
     @RequestMapping("/phieuthu/timkiem/{name}")
     public List<PhieuThu> timkiem(@PathVariable("name") String name){
+        baoMatService.save("Tìm kiếm","Tìm kiếm thông tin phiếu thu","/api/phieuthu/timkiem/"+name);
         return phieuThuRepository.timkiem("%"+name+"%");
     }
 
@@ -39,6 +46,7 @@ public class PhieuThuApi {
         //                     String maphieu , String ngaytao,
         //                     String noidungthu , String sotk ,Float sotien , String tennguoinop ,
         //                     Integer idnguoidung);
+        baoMatService.save("Thêm mới","Tạo phiếu thu","/api/phieuthu/add");
         phieuThuRepository.add(
                 phieuThu.getDiachiThu(),
                 phieuThu.getDoituong(),

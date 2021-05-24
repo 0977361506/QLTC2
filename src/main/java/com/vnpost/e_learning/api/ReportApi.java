@@ -27,6 +27,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class ReportApi {
+
+    @Autowired
+    private BaoMatService baoMatService ;
+
+
     @Autowired
     private PhieuChiRepository phieuChiRepository ;
     @Autowired
@@ -51,6 +56,7 @@ public class ReportApi {
 
     @GetMapping("/report/export")
     public String  export (@RequestParam("thang") String thang)  throws IOException {
+        baoMatService.save("Báo cáo","Xuất file báo cáo lương nhân viên theo tháng","/api/report/export");
         String [] mang = thang.split("-");
         ExcellServiceOutputExporter excellServiceOutputExporter = new ExcellServiceOutputExporter();
         int code = (int) Math.floor(((Math.random() * 899999) + 100000));
@@ -81,6 +87,7 @@ public class ReportApi {
     @GetMapping("/report/deleteBaoCao/{id}")
     public String deleteBaoCao (@PathVariable("id")Integer id) {
         try {
+            baoMatService.save("Xóa","Xóa file báo cáo","/report/deleteBaoCao/"+id);
             reportRepository.deleteReport(id);
         }catch (Exception e){
             e.printStackTrace();
@@ -90,6 +97,7 @@ public class ReportApi {
     }
     @GetMapping("/report/baocaokho")
     public String  exportbaocaokho (@RequestParam("thang") String thang)  throws IOException {
+        baoMatService.save("Báo cáo","Xuất file báo cáo kho theo tháng","/api/report/baocaokho");
         String [] mang = thang.split("-");
         ExportBaoCaoKho excellServiceOutputExporter = new ExportBaoCaoKho();
         int code = (int) Math.floor(((Math.random() * 899999) + 100000));
@@ -113,6 +121,7 @@ public class ReportApi {
     // baocaobanhang
     @GetMapping("/report/baocaobanhang")
     public String  baocaobanhang (@RequestParam("thang") String thang)  throws IOException {
+        baoMatService.save("Báo cáo","Xuất file báo cáo bán hàng theo tháng","/api/report/baocaobanhang");
         String [] mang = thang.split("-");
         ExportBaoCaoBanHang excellServiceOutputExporter = new ExportBaoCaoBanHang();
         int code = (int) Math.floor(((Math.random() * 899999) + 100000));
@@ -162,7 +171,7 @@ public class ReportApi {
 
     @PostMapping("/report/exportChamCong")
     public String  exportChamCong (@RequestBody List<BangCongTheoNgay> bangCongTheoNgays)  throws IOException {
-
+        baoMatService.save("Xuất file","Xuất file chấm công","/api/report/exportChamCong");
         ExportBangCong excellServiceOutputExporter = new ExportBangCong();
         int code = (int) Math.floor(((Math.random() * 899999) + 100000));
         String nameFile = "bangcongnhanvien"+code+".xlsx" ;
@@ -178,6 +187,7 @@ public class ReportApi {
     // bao cao doanh thu
     @GetMapping("/report/baocaodoanhthu")
     public String  baocaodoanhthu (@RequestParam("thang") String thang)  throws IOException {
+        baoMatService.save("Báo cáo","Xuất file báo cáo doanh thu theo tháng","/api/report/baocaodoanhthu");
         String [] mang = thang.split("-");
         // khởi tạo
         ExportBaoCaoDoanhThu exportBaoCaoDoanhThu = new ExportBaoCaoDoanhThu();

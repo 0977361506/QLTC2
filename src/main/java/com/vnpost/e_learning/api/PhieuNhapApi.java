@@ -6,6 +6,7 @@ import com.vnpost.e_learning.bean.PhieuChiTietBean;
 import com.vnpost.e_learning.entities.HangHoa;
 import com.vnpost.e_learning.entities.PhieuNhap;
 import com.vnpost.e_learning.repository.PhieuNhapRepository;
+import com.vnpost.e_learning.service.BaoMatService;
 import com.vnpost.e_learning.service.PhieuNhapService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class PhieuNhapApi {
+    @Autowired
+    private BaoMatService baoMatService ;
 
     @Autowired
     private PhieuNhapService phieuNhapService ;
@@ -64,6 +67,7 @@ public class PhieuNhapApi {
 
     @RequestMapping("/taophieunhap")
     public String taophieunhap (@RequestBody PhieuNhap phieuNhap){
+        baoMatService.save("Thêm mới","Tạo phiếu nhập","/api/taophieunhap");
        phieuNhapService.save(phieuNhap);
        List<PhieuNhap> phieuNhaps = phieuNhapRepository.findAll();
        PhieuNhap phieuNhapnew = phieuNhaps.get(phieuNhaps.size()-1);
@@ -74,6 +78,7 @@ public class PhieuNhapApi {
 
     @RequestMapping("/timkiemPhieunhap/{name}")
     public List<PhieuBean> timkiemPhieunhap (@PathVariable("name") String name){
+        baoMatService.save("Tìm kiếm","Tìm kiếm phiếu nhập","/api/timkiemPhieunhap/"+name);
         return  phieuNhapService.timkiem("%"+name+"%");
     }
 
@@ -81,6 +86,7 @@ public class PhieuNhapApi {
 
     @RequestMapping("/updateStatus/{id}/{status}")
     public String updateStatus (@PathVariable("id") Integer id ,@PathVariable("status") Integer status){
+        baoMatService.save("Cập nhật","Cập nhật trang thái phiếu xuất","/api/updateStatus/"+id+"/"+status);
         if(status==1)  phieuNhapRepository.updateStatus(0,id);
         else  phieuNhapRepository.updateStatus(1,id);
         return  "200" ;

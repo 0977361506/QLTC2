@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="/css/admin/course/courseware.css">
    <link rel="stylesheet" href="/css/admin/course/chapter.css">
   <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+
 
   <link href="/template/hill/css/hill.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/admin/course/category.css">
