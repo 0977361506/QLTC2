@@ -1,4 +1,6 @@
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
    <!-- Brand Logo -->
    <a href="index3.html" class="brand-link">
@@ -111,6 +113,8 @@
                </li>
             </ul>
          </li>
+
+ <c:if test = "${sessionScope.user.quyen == 1}">
          <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
                <i class="nav-icon fas fa-book"></i>
@@ -174,24 +178,25 @@
             </ul>
          </li>
 
-                  <li class="nav-item has-treeview">
-                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-table"></i>
-                        <p>
-                           Bảo mật
-                           <i class="fas fa-angle-left right"></i>
-                        </p>
-                     </a>
-                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                           <a href="/admin/baomat/luuvet" class="nav-link">
-                              <i class="far fa-circle nav-icon"></i>
-                              <p>Lưu vết người dùng</p>
-                           </a>
-                        </li>
+                   <li class="nav-item has-treeview">
+                                      <a href="#" class="nav-link">
+                                         <i class="nav-icon fas fa-table"></i>
+                                         <p>
+                                            Bảo mật
+                                            <i class="fas fa-angle-left right"></i>
+                                         </p>
+                                      </a>
+                                      <ul class="nav nav-treeview">
+                                         <li class="nav-item">
+                                            <a href="/admin/baomat/luuvet" class="nav-link">
+                                               <i class="far fa-circle nav-icon"></i>
+                                               <p>Lưu vết người dùng</p>
+                                            </a>
+                                         </li>
 
-                     </ul>
-                  </li>
+                                      </ul>
+                   </li>
+          </c:if>
 
 
       </nav>

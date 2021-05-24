@@ -60,6 +60,23 @@ public class NguoiDung implements Serializable {
     @Size(max = 255)
     @Column(name = "Password")
     private String password;
+    private Integer quyen;
+
+    public Integer getkHVip() {
+        return kHVip;
+    }
+
+    public Integer getQuyen() {
+        return quyen;
+    }
+
+    public void setkHVip(Integer kHVip) {
+        this.kHVip = kHVip;
+    }
+
+    public void setQuyen(Integer quyen) {
+        this.quyen = quyen;
+    }
 
     private  Integer trangthai ;
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nguoiDungID")
@@ -286,5 +303,5 @@ public class NguoiDung implements Serializable {
     public String toString() {
         return "pojos.NguoiDung[ id=" + id + " ]";
     }
-    
+
 }
